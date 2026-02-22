@@ -5,21 +5,29 @@ tableExists = false
 
 const generateTable = () => {
     let rowsNumber = parseInt(rows.value), columnsNumber = parseInt(columns.value)
+    
+    // if input is empty
+    if(!rowsNumber || !columnsNumber){
+        swal("Oops!", "Please enter valid rows and columns numbers.", "warning");
+        tableExists = false;
+        return
+    }
     table.innerHTML = ""
-    for(let i=0; i<rowsNumber; i++){
+    for(let i=0; i< rowsNumber; i++){
         var tableRow = ""
         for(let j=0; j<columnsNumber; j++){
             tableRow += `<td contenteditable></td>`
         }
         table.innerHTML += tableRow
     }
-    if(rowsNumber>0 && columnsNumber>0){
-        tableExists = true
-    }
+    
+    tableExists = true
+    
 }
 
 const ExportToExcel = (type, fn, dl) => {
     if(!tableExists){
+        swal("No Table Found!", "Please generate a table before exporting.", "error");
         return
     }
     var elt = table
